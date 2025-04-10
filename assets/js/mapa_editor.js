@@ -544,8 +544,7 @@ const verEmpresa = (shape) => {
 
 				// Si tiene un logo, mostrarlo
 				if (response.data.logo) {
-					let logoUrl = baseUrl + '/writable/uploads/logosEmpresasExpositoras/' + response.data.logo;
-
+					let logoUrl = baseUrl + 'writable/uploads/logosEmpresasExpositoras/' + response.data.logo;
 					$('#empresaLogoLink')  // Asegurarse de que el <a> tenga el href correcto
 						.attr('href', logoUrl)
 						.attr('data-src', logoUrl)
@@ -560,7 +559,7 @@ const verEmpresa = (shape) => {
 				}
 
 				if (response.data.render) {
-					let renderUrl = baseUrl + '/writable/uploads/renders/' + response.data.render;
+					let renderUrl = baseUrl + 'writable/uploads/renders/' + response.data.render;
 
 					$('#detRenderLink') // Asegurar que el <a> tenga el href correcto
 						.attr('href', renderUrl)
@@ -832,7 +831,10 @@ function editarFigura() {
 							if (!data.success) {
 								throw new Error(data.error || 'Error al actualizar');
 							}
+							console.log(data)
+
 							return data;
+
 						});
 				}
 			}).then((result) => {
@@ -843,7 +845,6 @@ function editarFigura() {
 						url: base_url + 'Mapa/buscar_stands/' + id_evento,
 						type: 'GET',
 						success: function (response) {
-							location.reload();
 							//cargarFiguras();
 							// Mostrar SweetAlert2 Toast de éxito
 							Swal.fire({
@@ -856,6 +857,8 @@ function editarFigura() {
 								timer: 3000,
 								timerProgressBar: true
 							});
+							// location.reload();
+
 						},
 						error: function () {
 							Swal.fire('Error', 'No se pudieron cargar las figuras actualizadas', 'error');
@@ -1199,7 +1202,10 @@ const abrirFormulario = (shape) => {
 				.then(response => response.json())
 				.then(data => {
 					if (data.message) {
-						return data;
+						console.log(data);
+						location.reload();
+						return;
+
 					} else {
 						throw new Error("Error al guardar");
 					}

@@ -59,12 +59,12 @@ class Eventos extends BaseController
         if ($logo && $logo->isValid() && !$logo->hasMoved()) {
             $newName = $logo->getRandomName();
             $logo->move(WRITEPATH . 'uploads/logosEmpresasExpositoras', $newName);
-            $logoURL = base_url('uploads/logosEmpresasExpositoras/' . $newName);
+            $logoURL =  $newName;
         }
         if ($render && $render->isValid() && !$render->hasMoved()) {
             $newName = $render->getRandomName();
             $render->move(WRITEPATH . 'uploads/renders', $newName);
-            $renderURL = base_url('uploads/renders/' . $newName);
+            $renderURL =  $newName;
         }
         // Cargar el modelo
         $standModel = new \App\Models\StandsModel();
@@ -97,7 +97,7 @@ class Eventos extends BaseController
             }
             $standModel->update($standExistente['id'], $dataUpdate);
     
-            return $this->respond(['message' => 'Registro actualizado con éxito', 'logoURL' => $logoURL], 200);
+            return $this->respond(['message' => 'Registro actualizado con éxito', 'data' => $dataUpdate], 200);
         } else {
             // Insertar nuevo registro
             $dataInsert = [
@@ -123,7 +123,7 @@ class Eventos extends BaseController
             }
             $standModel->insert($dataInsert);
     
-            return $this->respond(['message' => 'Nuevo registro guardado con éxito', 'logoURL' => $logoURL], 201);
+            return $this->respond(['message' => 'Nuevo registro guardado con éxito', 'data' => $dataInsert], 201);
         }
     }
     
@@ -220,7 +220,7 @@ class Eventos extends BaseController
             'event_place' => $lugar,
             'name_file' => $newName, // Incluir el nombre del archivo subido
             'clave' => $clave,
-            'uuid_event' => $this->generarUUIDv4()
+            
         ];
 
         // Insertar los datos en la base de datos

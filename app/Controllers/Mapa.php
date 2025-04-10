@@ -131,6 +131,7 @@ class Mapa extends BaseController
             $render->move(WRITEPATH . 'uploads/renders', $newName);
             $data['render'] = $newName;
         }
+
         // Actualizar el registro
         $updated = $model->where('id_konva', $this->request->getPost('id_konva'))
                         ->where('id_evento', $this->request->getPost('id_evento'))
